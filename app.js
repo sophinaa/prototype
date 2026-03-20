@@ -1,23 +1,28 @@
 const navButtons = document.querySelectorAll("[data-screen-target]");
-const backButtons = document.querySelectorAll("[data-back-target]");
 const screens = document.querySelectorAll(".screen");
-const title = document.getElementById("screen-title");
 const confirmActionButton = document.getElementById("confirm-action");
 const confirmationCard = document.getElementById("confirmation-card");
+const topBackButton = document.getElementById("top-back-button");
 
-const screenTitles = {
-  dashboard: "Network overview",
-  alerts: "Alert queue",
-  "atm-detail": "ATM diagnostics",
-  "action-center": "Response action center",
-};
+let currentScreenId = "dashboard";
+const screenHistory = [];
 
-function showScreen(targetId) {
+function updateBackButton() {
+  topBackButton.disabled = screenHistory.length === 0;
+}
+
+function showScreen(targetId, options = {}) {
+  const { pushHistory = true } = options;
+
+  if (pushHistory && targetId !== currentScreenId) {
+    screenHistory.push(currentScreenId);
+  }
+
   screens.forEach((screen) => {
     screen.classList.toggle("is-visible", screen.id === targetId);
   });
 
-  document.querySelectorAll(".nav-link").forEach((button) => {
+  navButtons.forEach((button) => {
     const isActive = button.dataset.screenTarget === targetId;
     button.classList.toggle("is-active", isActive);
     if (isActive) {
@@ -27,15 +32,13 @@ function showScreen(targetId) {
     }
   });
 
-  title.textContent = screenTitles[targetId];
+  currentScreenId = targetId;
+  updateBackButton();
 
-  const activeScreenHeading = document.querySelector(
-    `#${targetId} h3, #${targetId} h4`
-  );
-
-  if (activeScreenHeading) {
-    activeScreenHeading.setAttribute("tabindex", "-1");
-    activeScreenHeading.focus();
+  const activeHeading = document.querySelector(`#${targetId} h2`);
+  if (activeHeading) {
+    activeHeading.setAttribute("tabindex", "-1");
+    activeHeading.focus();
   }
 }
 
@@ -45,17 +48,17 @@ navButtons.forEach((button) => {
   });
 });
 
-backButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    showScreen(button.dataset.backTarget);
-  });
+topBackButton.addEventListener("click", () => {
+  const previousScreen = screenHistory.pop();
+  if (previousScreen) {
+    showScreen(previousScreen, { pushHistory: false });
+  }
 });
 
 confirmActionButton.addEventListener("click", () => {
-  confirmationCard.innerHTML = `
-    <p class="eyebrow">Action recorded</p>
-    <h5>Remote network diagnostic started for ATM-12</h5>
-    <p>The alert status changed to "investigating". Review the result in 2 minutes or escalate to the network team if packet loss remains high.</p>
-  `;
+  confirmationCard.innerHTML =
+    "<p><strong>Action recorded:</strong> Remote network diagnostic started for ATM-12.</p><p>The alert is now marked as investigating. Review results in 2 minutes or escalate if packet loss remains high.</p>";
   confirmationCard.focus();
 });
+
+updateBackButton();
