@@ -2,20 +2,14 @@ const navButtons = document.querySelectorAll("[data-screen-target]");
 const screens = document.querySelectorAll(".screen");
 const confirmActionButton = document.getElementById("confirm-action");
 const confirmationCard = document.getElementById("confirmation-card");
-const topBackButton = document.getElementById("top-back-button");
+const clickableCards = document.querySelectorAll(".metric-card-action[data-screen-target]");
 
 let currentScreenId = "dashboard";
-const screenHistory = [];
+const validScreenIds = new Set(Array.from(screens, (screen) => screen.id));
 
-function updateBackButton() {
-  topBackButton.disabled = screenHistory.length === 0;
-}
-
-function showScreen(targetId, options = {}) {
-  const { pushHistory = true } = options;
-
-  if (pushHistory && targetId !== currentScreenId) {
-    screenHistory.push(currentScreenId);
+function showScreen(targetId) {
+  if (!validScreenIds.has(targetId)) {
+    return;
   }
 
   screens.forEach((screen) => {
@@ -33,7 +27,6 @@ function showScreen(targetId, options = {}) {
   });
 
   currentScreenId = targetId;
-  updateBackButton();
 
   const activeHeading = document.querySelector(`#${targetId} h2`);
   if (activeHeading) {
@@ -42,17 +35,31 @@ function showScreen(targetId, options = {}) {
   }
 }
 
+function navigateToScreen(targetId) {
+  if (!validScreenIds.has(targetId) || targetId === currentScreenId) {
+    return;
+  }
+
+  window.location.hash = targetId;
+}
+
 navButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    showScreen(button.dataset.screenTarget);
+    navigateToScreen(button.dataset.screenTarget);
   });
 });
 
-topBackButton.addEventListener("click", () => {
-  const previousScreen = screenHistory.pop();
-  if (previousScreen) {
-    showScreen(previousScreen, { pushHistory: false });
-  }
+clickableCards.forEach((card) => {
+  card.addEventListener("click", () => {
+    navigateToScreen(card.dataset.screenTarget);
+  });
+
+  card.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      navigateToScreen(card.dataset.screenTarget);
+    }
+  });
 });
 
 confirmActionButton.addEventListener("click", () => {
@@ -61,4 +68,10 @@ confirmActionButton.addEventListener("click", () => {
   confirmationCard.focus();
 });
 
-updateBackButton();
+window.addEventListener("hashchange", () => {
+  const targetId = window.location.hash.replace("#", "") || "dashboard";
+  showScreen(validScreenIds.has(targetId) ? targetId : "dashboard");
+});
+
+const initialTargetId = window.location.hash.replace("#", "") || "dashboard";
+showScreen(validScreenIds.has(initialTargetId) ? initialTargetId : "dashboard");
