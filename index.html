@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATM Network Operations Prototype</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary">
+        <div class="brand">
+          <p class="eyebrow">Operations Console</p>
+          <h1>ATM Monitor</h1>
+          <p class="subtle">System administrator prototype for issue detection and response.</p>
+        </div>
+
+        <nav class="nav-list" aria-label="Screen navigation">
+          <button
+            class="nav-link is-active"
+            type="button"
+            data-screen-target="dashboard"
+            aria-current="page"
+          >
+            Dashboard
+          </button>
+          <button class="nav-link" type="button" data-screen-target="alerts">Alert queue</button>
+          <button class="nav-link" type="button" data-screen-target="atm-detail">ATM detail</button>
+          <button class="nav-link" type="button" data-screen-target="action-center">
+            Action center
+          </button>
+        </nav>
+
+        <section class="sidebar-panel" aria-labelledby="wcag-title">
+          <h2 id="wcag-title">WCAG notes</h2>
+          <ul>
+            <li>Strong contrast for text and controls</li>
+            <li>Visible keyboard focus states</li>
+            <li>Color never used as the only signal</li>
+            <li>Clear labels, headings, and status wording</li>
+          </ul>
+        </section>
+      </aside>
+
+      <main id="main-content" class="content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">ATM network health</p>
+            <h2 id="screen-title">Network overview</h2>
+          </div>
+          <div class="topbar-actions">
+            <label class="search-field">
+              <span class="sr-only">Search ATMs, alerts, or locations</span>
+              <input type="search" placeholder="Search ATM ID, issue, or branch" />
+            </label>
+            <button class="button button-secondary">Export report</button>
+          </div>
+        </header>
+
+        <section class="screen is-visible" id="dashboard" aria-labelledby="dashboard-title">
+          <div class="screen-header">
+            <div>
+              <h3 id="dashboard-title">Dashboard</h3>
+              <p>Start with the system-wide picture, then move into the most urgent anomaly.</p>
+            </div>
+            <div class="status-pill status-critical" aria-label="4 critical alerts">
+              Critical alerts: 4
+            </div>
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric-card">
+              <h4>Total ATMs</h4>
+              <p class="metric-value">120</p>
+              <p class="metric-note">Across 18 branches</p>
+            </article>
+            <article class="metric-card">
+              <h4>Healthy</h4>
+              <p class="metric-value">104</p>
+              <p class="metric-note">Stable in the last 24 hours</p>
+            </article>
+            <article class="metric-card metric-card-alert">
+              <h4>Active issues</h4>
+              <p class="metric-value">12</p>
+              <p class="metric-note">6 need operator review</p>
+            </article>
+            <article class="metric-card metric-card-alert">
+              <h4>Critical alerts</h4>
+              <p class="metric-value">4</p>
+              <p class="metric-note">2 affecting cash withdrawal</p>
+            </article>
+          </div>
+
+          <div class="layout-grid">
+            <section class="panel panel-hero" aria-labelledby="hero-title">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Top priority</p>
+                  <h4 id="hero-title">ATM-12 is offline after repeated network failures</h4>
+                </div>
+                <span class="status-pill status-critical">Critical</span>
+              </div>
+              <p>
+                The machine stopped syncing 14 minutes ago. Customer transactions may fail and
+                branch staff cannot confirm cassette status remotely.
+              </p>
+              <dl class="summary-list">
+                <div>
+                  <dt>Location</dt>
+                  <dd>Oxford Street Branch</dd>
+                </div>
+                <div>
+                  <dt>Likely cause</dt>
+                  <dd>Router packet loss above threshold</dd>
+                </div>
+                <div>
+                  <dt>Suggested next step</dt>
+                  <dd>Run remote network diagnostic, then notify branch if link stays unstable</dd>
+                </div>
+              </dl>
+              <div class="button-row">
+                <button class="button" type="button" data-screen-target="atm-detail">
+                  Open ATM detail
+                </button>
+                <button class="button button-secondary" type="button" data-screen-target="alerts">
+                  Review alert queue
+                </button>
+              </div>
+            </section>
+
+            <section class="panel" aria-labelledby="trend-title">
+              <div class="panel-header">
+                <h4 id="trend-title">Incident trend</h4>
+                <span class="legend">Errors per hour</span>
+              </div>
+              <div class="trend-chart" role="img" aria-label="Error volume rises sharply between 8 AM and 10 AM, peaking at 9 AM.">
+                <div class="chart-bars">
+                  <div class="bar-group"><span style="height: 28%"></span><strong>06</strong></div>
+                  <div class="bar-group"><span style="height: 32%"></span><strong>07</strong></div>
+                  <div class="bar-group"><span style="height: 78%"></span><strong>08</strong></div>
+                  <div class="bar-group"><span style="height: 94%"></span><strong>09</strong></div>
+                  <div class="bar-group bar-alert"><span style="height: 86%"></span><strong>10</strong></div>
+                  <div class="bar-group"><span style="height: 54%"></span><strong>11</strong></div>
+                </div>
+                <p class="chart-caption">Spike aligns with repeated network timeout alerts from ATM-12 and ATM-21.</p>
+              </div>
+            </section>
+
+            <section class="panel" aria-labelledby="alerts-title">
+              <div class="panel-header">
+                <h4 id="alerts-title">Current critical alerts</h4>
+                <button class="text-button" type="button" data-screen-target="alerts">
+                  See all alerts
+                </button>
+              </div>
+              <ul class="alert-list">
+                <li>
+                  <div>
+                    <strong>ATM-12</strong>
+                    <p>Network link down, customer withdrawals impacted</p>
+                  </div>
+                  <span class="status-pill status-critical">14 min</span>
+                </li>
+                <li>
+                  <div>
+                    <strong>ATM-21</strong>
+                    <p>High dispenser reject rate detected</p>
+                  </div>
+                  <span class="status-pill status-warning">22 min</span>
+                </li>
+                <li>
+                  <div>
+                    <strong>ATM-05</strong>
+                    <p>Printer out of paper, receipts unavailable</p>
+                  </div>
+                  <span class="status-pill status-warning">31 min</span>
+                </li>
+                <li>
+                  <div>
+                    <strong>ATM-44</strong>
+                    <p>Cabinet tamper sensor triggered, needs branch check</p>
+                  </div>
+                  <span class="status-pill status-critical">5 min</span>
+                </li>
+              </ul>
+            </section>
+
+            <section class="panel" aria-labelledby="health-title">
+              <div class="panel-header">
+                <h4 id="health-title">Network health by region</h4>
+                <span class="legend">Text labels support the map-free view</span>
+              </div>
+              <table>
+                <caption class="sr-only">ATM health by region</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Region</th>
+                    <th scope="col">Healthy</th>
+                    <th scope="col">Issues</th>
+                    <th scope="col">Most common fault</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Central London</th>
+                    <td>28</td>
+                    <td>4</td>
+                    <td>Network instability</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">North</th>
+                    <td>21</td>
+                    <td>3</td>
+                    <td>Receipt printer faults</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">South</th>
+                    <td>25</td>
+                    <td>2</td>
+                    <td>Low cash warnings</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">West</th>
+                    <td>30</td>
+                    <td>3</td>
+                    <td>Card reader errors</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+          </div>
+        </section>
+
+        <section class="screen" id="alerts" aria-labelledby="alerts-screen-title">
+          <div class="screen-header">
+            <div>
+              <button class="back-button" type="button" data-back-target="dashboard">
+                Back to dashboard
+              </button>
+              <h3 id="alerts-screen-title">Alert queue</h3>
+              <p>Use sortable rows to identify urgency, impact, and the next investigation target.</p>
+            </div>
+          </div>
+
+          <section class="panel" aria-labelledby="queue-title">
+            <div class="panel-header">
+              <h4 id="queue-title">Open incidents</h4>
+              <span class="legend">Prioritized by severity, service impact, and age</span>
+            </div>
+            <table>
+              <caption class="sr-only">Open incident queue</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Severity</th>
+                  <th scope="col">ATM</th>
+                  <th scope="col">Issue</th>
+                  <th scope="col">Impact</th>
+                  <th scope="col">Age</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="status-pill status-critical">Critical</span></td>
+                  <th scope="row">ATM-12</th>
+                  <td>Network link down</td>
+                  <td>Withdrawals unavailable</td>
+                  <td>14 min</td>
+                  <td>
+                    <button class="text-button" type="button" data-screen-target="atm-detail">
+                      Investigate
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="status-pill status-warning">High</span></td>
+                  <th scope="row">ATM-21</th>
+                  <td>Cash dispenser rejects increased</td>
+                  <td>Slow customer queue</td>
+                  <td>22 min</td>
+                  <td><button class="text-button" type="button">Assign</button></td>
+                </tr>
+                <tr>
+                  <td><span class="status-pill status-warning">High</span></td>
+                  <th scope="row">ATM-44</th>
+                  <td>Tamper sensor alert</td>
+                  <td>Security check required</td>
+                  <td>5 min</td>
+                  <td><button class="text-button" type="button">Escalate</button></td>
+                </tr>
+                <tr>
+                  <td><span class="status-pill">Medium</span></td>
+                  <th scope="row">ATM-05</th>
+                  <td>Receipt paper empty</td>
+                  <td>Receipts unavailable</td>
+                  <td>31 min</td>
+                  <td><button class="text-button" type="button">Schedule refill</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </section>
+
+        <section class="screen" id="atm-detail" aria-labelledby="detail-title">
+          <div class="screen-header">
+            <div>
+              <button class="back-button" type="button" data-back-target="alerts">
+                Back to alert queue
+              </button>
+              <p class="eyebrow">ATM detail</p>
+              <h3 id="detail-title">ATM-12: Oxford Street Branch</h3>
+              <p>Understand the issue, why the system flagged it, and what action is recommended.</p>
+            </div>
+            <span class="status-pill status-critical">Status: offline</span>
+          </div>
+
+          <div class="layout-grid detail-grid">
+            <section class="panel" aria-labelledby="diagnostic-title">
+              <div class="panel-header">
+                <h4 id="diagnostic-title">Diagnostic summary</h4>
+                <button class="text-button" type="button" data-screen-target="action-center">
+                  Respond
+                </button>
+              </div>
+              <dl class="summary-list">
+                <div>
+                  <dt>Problem detected</dt>
+                  <dd>Repeated network timeouts followed by missed heartbeat events</dd>
+                </div>
+                <div>
+                  <dt>Confidence</dt>
+                  <dd>High confidence based on 3 matching log sources</dd>
+                </div>
+                <div>
+                  <dt>Customer impact</dt>
+                  <dd>Card authentication and withdrawals unavailable</dd>
+                </div>
+                <div>
+                  <dt>Recommended action</dt>
+                  <dd>Run remote ping and restart branch router if branch confirms no local maintenance</dd>
+                </div>
+              </dl>
+            </section>
+
+            <section class="panel" aria-labelledby="timeline-title">
+              <div class="panel-header">
+                <h4 id="timeline-title">Issue timeline</h4>
+                <span class="legend">Newest event first</span>
+              </div>
+              <ol class="timeline">
+                <li>
+                  <strong>10:14</strong>
+                  <p>ATM marked offline after three missed heartbeat checks.</p>
+                </li>
+                <li>
+                  <strong>10:09</strong>
+                  <p>Log analysis detected 18 network timeouts in 5 minutes.</p>
+                </li>
+                <li>
+                  <strong>10:05</strong>
+                  <p>Latency exceeded normal range for this branch by 320%.</p>
+                </li>
+                <li>
+                  <strong>09:58</strong>
+                  <p>First warning raised by branch router health monitor.</p>
+                </li>
+              </ol>
+            </section>
+
+            <section class="panel" aria-labelledby="evidence-title">
+              <div class="panel-header">
+                <h4 id="evidence-title">Evidence behind the alert</h4>
+              </div>
+              <div class="evidence-card">
+                <p class="log-tag">Application log</p>
+                <p>Transaction gateway requests failed with timeout error code <code>NW-408</code>.</p>
+              </div>
+              <div class="evidence-card">
+                <p class="log-tag">Device log</p>
+                <p>Heartbeat service reported unreachable network endpoint on three cycles.</p>
+              </div>
+              <div class="evidence-card">
+                <p class="log-tag">Branch router</p>
+                <p>Packet loss exceeded 27%, crossing the service interruption threshold.</p>
+              </div>
+            </section>
+
+            <section class="panel" aria-labelledby="impact-title">
+              <div class="panel-header">
+                <h4 id="impact-title">Service impact and fallback</h4>
+              </div>
+              <ul class="check-list">
+                <li><strong>Unavailable:</strong> Cash withdrawal and balance enquiry</li>
+                <li><strong>Available fallback:</strong> Counter service inside branch</li>
+                <li><strong>Branch contact:</strong> Emma Li, Assistant Manager, ext. 204</li>
+                <li><strong>Last successful transaction:</strong> 09:57, card withdrawal</li>
+              </ul>
+            </section>
+          </div>
+        </section>
+
+        <section class="screen" id="action-center" aria-labelledby="action-title">
+          <div class="screen-header">
+            <div>
+              <button class="back-button" type="button" data-back-target="atm-detail">
+                Back to ATM detail
+              </button>
+              <h3 id="action-title">Action center</h3>
+              <p>Take a response step with clear consequences and confirmation feedback.</p>
+            </div>
+          </div>
+
+          <div class="layout-grid detail-grid">
+            <section class="panel" aria-labelledby="action-options-title">
+              <div class="panel-header">
+                <h4 id="action-options-title">Recommended actions</h4>
+              </div>
+              <form class="action-form">
+                <fieldset>
+                  <legend>Choose the next response</legend>
+                  <label class="radio-card">
+                    <input type="radio" name="action" checked />
+                    <span>
+                      <strong>Run remote network diagnostic</strong>
+                      <small>Fastest validation step. No customer-facing change.</small>
+                    </span>
+                  </label>
+                  <label class="radio-card">
+                    <input type="radio" name="action" />
+                    <span>
+                      <strong>Notify branch staff</strong>
+                      <small>Confirms whether local maintenance or power changes caused the outage.</small>
+                    </span>
+                  </label>
+                  <label class="radio-card">
+                    <input type="radio" name="action" />
+                    <span>
+                      <strong>Escalate to network team</strong>
+                      <small>Use when the diagnostic confirms branch-side connectivity loss.</small>
+                    </span>
+                  </label>
+                </fieldset>
+                <label class="field">
+                  <span>Operator note</span>
+                  <textarea rows="4">ATM-12 offline. Diagnostic requested due to repeated timeout pattern and missed heartbeats.</textarea>
+                </label>
+                <div class="button-row">
+                  <button type="button" class="button" id="confirm-action">Confirm action</button>
+                  <button type="button" class="button button-secondary" data-screen-target="atm-detail">
+                    Back to ATM detail
+                  </button>
+                </div>
+              </form>
+            </section>
+
+            <section class="panel" aria-labelledby="confirmation-title">
+              <div class="panel-header">
+                <h4 id="confirmation-title">Confirmation state</h4>
+              </div>
+              <div class="confirmation-card" id="confirmation-card" tabindex="-1" aria-live="polite">
+                <p class="eyebrow">Awaiting action</p>
+                <h5>No response sent yet</h5>
+                <p>Once confirmed, the system records the action, updates the alert, and prompts the next review point.</p>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
