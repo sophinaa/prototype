@@ -1,48 +1,28 @@
-# ATM Network Operations Prototype
+ATM Monitoring & Diagnostics System
+Overview
 
-This is a lightweight UI prototype for a system administrator monitoring and responding to ATM network issues.
+This project is a prototype system for monitoring ATM networks, detecting anomalies, and providing diagnostic insights. It aggregates log data, identifies issues, and presents them through a clear dashboard interface to support system administrators in responding quickly to problems.
 
-## Screens
+Features
 
-- `Dashboard`: overview of system health and the highest-priority anomaly
-- `Alert queue`: list view for prioritizing investigation
-- `ATM detail`: evidence, timeline, impact, and recommended action
-- `Action center`: response selection and confirmation state
+Real-time overview of ATM network health
 
-## Accessibility choices
+Detection of anomalies (e.g. network failures, hardware issues)
 
-- Semantic landmarks and heading structure
-- Skip link for keyboard users
-- Visible focus states
-- Text labels and severity words in addition to color
-- High-contrast text and controls
-- Mobile-friendly single-column fallback
+Clear visualisation of system status and alerts
 
-## WCAG-aware color mapping
+Root cause analysis with recommended actions
 
-Requested palette:
+Role-based access (conceptual)
 
-- `#942222`
-- `#801c1c`
-- `#cbbdaf`
-- `#9bb9a8`
-- `#b2d5c9`
+Prototype (UI/UX)
 
-Recommended semantic use:
+The UI was designed in Figma and focuses on:
 
-- `Primary action / critical emphasis`: `#801c1c`
-- `Primary action hover / stronger emphasis`: `#942222`
-- `Borders / dividers / soft containers`: `#cbbdaf`
-- `Secondary accents / data bars / input borders`: `#9bb9a8`
-- `Soft background tint / support highlights`: `#b2d5c9`
+Clear prioritisation of critical issues
 
-Use with caution:
+Simple navigation between system views
 
-- Do not use `#cbbdaf`, `#9bb9a8`, or `#b2d5c9` as body text on light backgrounds.
-- Keep body text dark for WCAG 2.1 AA contrast.
-- Use severity words like `Critical`, `High`, or `Offline` alongside color.
-- Keep focus indicators separate from status color; this prototype uses a dedicated blue focus ring.
+Actionable insights (not just data display)
 
-## Run locally
-
-Open `index.html` in a browser.
+Accessibility considerations (contrast, hierarchy, readability)
