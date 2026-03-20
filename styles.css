@@ -26,9 +26,11 @@ body {
   margin: 0;
   font-family: "Public Sans", sans-serif;
   background:
-    radial-gradient(circle at top right, rgba(178, 213, 201, 0.26), transparent 25%),
-    linear-gradient(180deg, #f4eee7 0%, #fbf8f4 100%);
+    radial-gradient(circle at top left, rgba(178, 213, 201, 0.34), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(148, 34, 34, 0.14), transparent 24%),
+    linear-gradient(135deg, #e9eee8 0%, #f5efe8 48%, #eef4f0 100%);
   color: var(--text);
+  background-attachment: fixed;
 }
 
 button,
@@ -82,8 +84,11 @@ summary {
 
 .sidebar {
   padding: 1.5rem 1rem;
-  background: linear-gradient(180deg, #f7f1ea 0%, #efe7df 100%);
-  border-right: 1px solid var(--panel-border);
+  background: rgba(255, 252, 248, 0.42);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-right: 1px solid rgba(255, 255, 255, 0.42);
+  box-shadow: inset -1px 0 0 rgba(203, 189, 175, 0.24);
 }
 
 .sidebar-brand {
@@ -158,10 +163,12 @@ p {
 
 .search-field input,
 .field textarea {
-  border: 1px solid #9bb9a8;
+  border: 1px solid rgba(155, 185, 168, 0.6);
   border-radius: 12px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.68);
   color: var(--text);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .search-field input {
@@ -182,11 +189,13 @@ p {
 
 .nav-link,
 .filter-chip {
-  border: 1px solid var(--panel-border);
-  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.46);
+  background: rgba(255, 255, 255, 0.58);
   color: var(--brand-strong);
   padding: 0.75rem 1rem;
   font-weight: 700;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .nav-link {
@@ -417,10 +426,14 @@ p {
 .evidence-card,
 .confirmation-card,
 .wireframe-block {
-  background: var(--surface);
-  border: 1px solid var(--panel-border);
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid rgba(255, 255, 255, 0.54);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow:
+    0 16px 34px rgba(17, 34, 24, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .metric-card,
@@ -449,9 +462,9 @@ p {
 
 .metric-card-alert,
 .panel-hero {
-  background: linear-gradient(180deg, #f5f7f3 0%, #fffdfb 100%);
+  background: linear-gradient(180deg, rgba(240, 247, 243, 0.72) 0%, rgba(255, 253, 251, 0.58) 100%);
   border-width: 1px;
-  border-color: #c9d6cc;
+  border-color: rgba(155, 185, 168, 0.48);
 }
 
 .panel-hero {
@@ -470,7 +483,7 @@ p {
 
 .panel-graph,
 .panel-table {
-  background: #fffdfa;
+  background: rgba(255, 253, 250, 0.48);
 }
 
 .metric-value {
@@ -572,10 +585,12 @@ p {
 .next-action-card {
   margin-top: 1rem;
   padding: 1rem 1.05rem;
-  border: 1px solid #7fa08f;
+  border: 1px solid rgba(127, 160, 143, 0.54);
   border-radius: 14px;
-  background: linear-gradient(180deg, #dfece5 0%, #f6fbf8 100%);
+  background: linear-gradient(180deg, rgba(223, 236, 229, 0.72) 0%, rgba(246, 251, 248, 0.58) 100%);
   box-shadow: 0 12px 24px rgba(39, 70, 59, 0.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .next-action-label {
@@ -706,9 +721,11 @@ p {
 .trend-chart-line {
   margin-top: 1rem;
   padding: 0.9rem;
-  border: 1px solid var(--panel-border);
+  border: 1px solid rgba(255, 255, 255, 0.44);
   border-radius: 16px;
-  background: linear-gradient(180deg, #fcfaf7 0%, #f7f1ea 100%);
+  background: linear-gradient(180deg, rgba(252, 250, 247, 0.6) 0%, rgba(247, 241, 234, 0.42) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .svg-graph-large {
@@ -772,9 +789,11 @@ p {
 .diagnostic-graph {
   margin-top: 1rem;
   padding: 1rem;
-  border: 1px solid var(--panel-border);
+  border: 1px solid rgba(255, 255, 255, 0.44);
   border-radius: 14px;
-  background: linear-gradient(180deg, #fcfaf7 0%, #f4efe9 100%);
+  background: linear-gradient(180deg, rgba(252, 250, 247, 0.56) 0%, rgba(244, 239, 233, 0.42) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .mini-graph-header {
